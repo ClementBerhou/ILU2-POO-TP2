@@ -1,7 +1,6 @@
 package frontiere;
 
 import controleur.ControlEmmenager;
-import java.util.Scanner;
 
 public class BoundaryEmmenager {
 	private ControlEmmenager controlEmmenager;
@@ -9,29 +8,10 @@ public class BoundaryEmmenager {
 	public BoundaryEmmenager(ControlEmmenager controlEmmenager) {
 		this.controlEmmenager = controlEmmenager;
 	}
-	
-	//ma modif
-	public int entrerForceClavier() {
-		Scanner sc = new Scanner(System.in);
-		int force = sc.nextInt();
-		return force;
-	}
-	public int entrerForcePotionMin() {
-		Scanner sc = new Scanner(System.in);
-		int forceMin = sc.nextInt();
-		return forceMin;
-	}
-	public int entrerForcePotionMax() {
-		Scanner sc = new Scanner(System.in);
-		int forceMax = sc.nextInt();
-		return forceMax;
-	}
-	//fin modif
 
 	public void emmenager(String nomVisiteur) {
 		if (controlEmmenager.isHabitant(nomVisiteur)) {
-			System.out.println(
-					"Mais vous êtes déjà un habitant du village !");
+			System.out.println("Mais vous êtes déjà un habitant du village !");
 		} else {
 			StringBuilder question = new StringBuilder();
 			question.append("Êtes-vous :\n");
@@ -46,10 +26,7 @@ public class BoundaryEmmenager {
 					break;
 
 				case 2:
-					//TODO a completer
-					System.out.println("Bienvenu villageois"+nomVisiteur+"\n");
-					System.out.println("Quelle est votre force ? \n");
-					controlEmmenager.ajouterGaulois(nomVisiteur,entrerForceClavier());
+					emmenagerGalois(nomVisiteur);
 					break;
 
 				default:
@@ -59,27 +36,29 @@ public class BoundaryEmmenager {
 			} while (choixUtilisateur != 1 && choixUtilisateur != 2);
 		}
 	}
-	
-	
 
 	private void emmenagerDruide(String nomVisiteur) {
-		//TODO a completer
-		System.out.println("Bienvenu druide "+nomVisiteur+"\n");
-		System.out.println("Quelle est votre force ? \n");
-		int forceDruide = entrerForceClavier();
-		int effetPotionMin;
-		int effetPotionMax;
-		do {
-			System.out.println("Quelle est la force de la potion la plus faible que vous produisez ? \n");
-			effetPotionMin = entrerForcePotionMin();
-			System.out.println("Quelle est la force de la potion la plus forte que vous produisez ? \n");
-			effetPotionMax = entrerForcePotionMax();
-			if(effetPotionMin>effetPotionMax) {
-				System.out.println("Attention Druide, vous vous êtes trompé entre le minimum et le maximum");
-			}
-		}while(effetPotionMax<effetPotionMin);
-		controlEmmenager.ajouterDruide(nomVisiteur, forceDruide, effetPotionMin , effetPotionMax);
-		
-		
+		System.out.print("Bienvenue druide " + nomVisiteur);
+		StringBuilder questionDruide = new StringBuilder();
+		System.out.println("\nQuelle est votre force ?");
+		int force = Clavier.entrerEntier(questionDruide.toString());
+		System.out.print("\nQuelle est la force de potion la plus faible que vous produisez ?");
+		int potionMin = Clavier.entrerEntier(questionDruide.toString());
+		System.out.print("\nQuelle est la force de potion la plus forte que vous produisez ?");
+		int potionMax = Clavier.entrerEntier(questionDruide.toString());
+		controlEmmenager.ajouterDruide(nomVisiteur, force, potionMin, potionMax);
+	}
+	
+	private void emmenagerGalois(String nomVisiteur) {
+		System.out.print("Bienvenue villegeois " + nomVisiteur);
+		StringBuilder chaine = new StringBuilder();
+//		chaine.append("Bienvenue villegeois ");
+//		chaine.append(nomVisiteur);
+//		System.out.println(chaine.toString());
+		StringBuilder questionGaulois = new StringBuilder();
+		questionGaulois.append("\nQuelle est votre force ?\n");
+		System.out.println(chaine.toString());
+		int force = Clavier.entrerEntier(questionGaulois.toString());
+		controlEmmenager.ajouterGaulois(nomVisiteur, force);
 	}
 }

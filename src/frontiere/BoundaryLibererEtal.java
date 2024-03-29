@@ -10,25 +10,16 @@ public class BoundaryLibererEtal {
 	}
 
 	public void libererEtal(String nomVendeur) {
-		//TODO a completer
-		
-		if(controlLibererEtal.isVendeur(nomVendeur)==false) 
-			System.out.println("Mais vous n'êtes pas inscrit sur notre marché aujourd'hui ! \n");
-		else {
-			String[] donneesEtalBoundary = new String[5];
-			donneesEtalBoundary = controlLibererEtal.libererEtal(nomVendeur);
-			/*
-			String etalOccupe = donneesEtalBoundary[0];
-			Boolean etalOcc = Boolean.valueOf(etalOccupe);
-			if(etalOcc==false) {
-				
-			}*/
-			String quantiteVendu = donneesEtalBoundary[4];
-			String quantiteInitial = donneesEtalBoundary[3];
-			String produit = donneesEtalBoundary[2];
-			String nomVendeurBoundary = donneesEtalBoundary[1];
-			System.out.println("Vous avez vendu "+quantiteVendu+" sur"+quantiteInitial+" "+produit+".\n");
-			System.out.println("Au revoir "+nomVendeurBoundary+" passez une bonne journée.");
+		if(!controlLibererEtal.isVendeur(nomVendeur)){
+			System.out.println("Mais vous n'etes pas inscrit sur notre marche aujourd'hui!");
+		} else {
+			String[] donneesEtal = controlLibererEtal.libererEtal(nomVendeur);
+			String etalOccupee = donneesEtal[0];
+			if (etalOccupee != null) {
+				System.out.println("Vous avez vendu " + donneesEtal[4] + " sur " + donneesEtal[3] + 
+						" " + donneesEtal[2]);
+				System.out.print("Au revoir " + nomVendeur + " passez  une bonne journee!");
+			}
 		}
 	}
 
